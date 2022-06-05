@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.vbsdemo.databinding.ActivityMainBinding
 import com.fr71.vbs.*
+import com.fr71.vbs.utils.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                     showUnderLine = true,
                     clickListener = object : OnVbsTextClickListener {
                         override fun onClick(view: View, clickText: String, clickTag: Any?) {
-                            toastShort("$clickTag")
+                            toast("$clickTag")
                         }
                     }),
             )

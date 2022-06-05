@@ -1,6 +1,7 @@
 package com.fr71.vbs
 
 import android.graphics.Color
+import android.text.InputFilter
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -10,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.fr71.vbs.utils.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,7 +49,7 @@ fun TextView.bindTextViewContent(text: Any, richTexts: List<VBsTextBean>? = null
             }
             this.text = mSpannable
             this.movementMethod = LinkMovementMethod.getInstance()
-            this.highlightColor = this.getColorFromRes(android.R.color.transparent)
+            this.highlightColor = this.color(android.R.color.transparent)
         }
     }
 }
@@ -86,10 +88,19 @@ fun ImageView.bindImageSource(imgData: Any, default: Int? = null) {
  * [occupy] 隐藏时有效，隐藏时是否占位隐藏 可选，默认false
  */
 @BindingAdapter(value = ["vbs_isVisibility", "vbs_occupy"], requireAll = false)
-fun View.bindViewIsVisibility(isVisibility: Boolean, occupy: Boolean? = false): Unit {
+fun View.bindViewIsVisibility(isVisibility: Boolean, occupy: Boolean? = false) {
     isVisibility.yes {
-        this.visibility = View.VISIBLE
+        visible()
     }.otherwise {
-        this.visibility = if (occupy == true) View.INVISIBLE else View.GONE
+        if (occupy == true) invisible() else gone()
     }
+}
+
+
+/**
+ * 动态设置最大长度限制
+ */
+@BindingAdapter(value = ["vbs_maxLength"])
+fun TextView.maxLength(max: Int){
+    filters = arrayOf<InputFilter>(InputFilter.LengthFilter(max))
 }

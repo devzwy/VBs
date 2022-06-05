@@ -20,7 +20,7 @@ class PinyinUtils private constructor() {
                 val ch = ccs[i]
                 if (ch.code >= 0x4E00 && ch.code <= 0x9FA5) {
                     val sp = (ch.code - 0x4E00) * 6
-                    sb.append(pinyinTable!!.substring(sp, sp + 6).trim { it <= ' ' })
+                    sb.append(pinyinTable.substring(sp, sp + 6).trim { it <= ' ' })
                 } else {
                     sb.append(ch)
                 }
@@ -83,12 +83,12 @@ class PinyinUtils private constructor() {
                 if (str == "澹台") return "tantai" else if (str == "尉迟") return "yuchi" else if (str == "万俟") return "moqi" else if (str == "单于") return "chanyu"
             }
             val ch = name[0]
-            if (SURNAMES!!.containsKey(ch)) {
+            if (SURNAMES.containsKey(ch)) {
                 return SURNAMES[ch]
             }
             return if (ch.code >= 0x4E00 && ch.code <= 0x9FA5) {
                 val sp = (ch.code - 0x4E00) * 6
-                pinyinTable!!.substring(sp, sp + 6).trim { it <= ' ' }
+                pinyinTable.substring(sp, sp + 6).trim { it <= ' ' }
             } else {
                 ch.toString()
             }
