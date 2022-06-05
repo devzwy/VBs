@@ -83,6 +83,22 @@ class MainActivity : AppCompatActivity() {
     inner class ImgData(val imgData: Any, val placeholder: Int? = null)
 
 
+
+    fun aaaa(){
+        toastShort("")
+        toastLong("")
+        dp2px(100)
+        px2dp(100)
+        copyToClipboard("1234567")
+        getColorFromRes(R.color.black)
+        TestData().toJson()
+        "{...}".toObject(TestData::class.java).a
+        "[...]".toObjectArray<String>().get(0)
+        "[{},{}]".toObjectArray<TestData>().get(0)
+
+    }
+
+
 }
 
 data class TestData(

@@ -78,6 +78,20 @@ val Context.batteryManager get() = getSystemService<BatteryManager>()
 val Context.jobScheduler get() = getSystemService<JobScheduler>()
 val Context.accessibilityManager get() = getSystemService<AccessibilityManager>()
 
+private fun loadImg(
+    imageView: ImageView,
+    imgData: Any,
+    placeholderResId: Int? = null
+) {
+    Glide.with(imageView)
+        .load(imgData).let {
+            placeholderResId?.let { phr ->
+                it.placeholder(phr)
+            }
+            it.into(imageView)
+        }
+}
+
 sealed class BooleanExt<out T> constructor(val boolean: Boolean)
 
 object Otherwise : BooleanExt<Nothing>(true)
@@ -117,7 +131,6 @@ fun Context.toastLong(text: String) {
     toast(this, text, Toast.LENGTH_LONG)
 }
 
-
 fun View.toastShort(text: String) {
     toast(this.context, text, Toast.LENGTH_SHORT)
 }
@@ -125,7 +138,6 @@ fun View.toastShort(text: String) {
 fun View.toastLong(text: String) {
     toast(this.context, text, Toast.LENGTH_LONG)
 }
-
 
 /**
  * dp值转换为px
@@ -196,21 +208,6 @@ fun <T> String.toObjectArray(): ArrayList<T> {
  */
 fun Any.toJson() = gson.toJson(this)
 
-
-private fun loadImg(
-    imageView: ImageView,
-    imgData: Any,
-    placeholderResId: Int? = null
-) {
-    Glide.with(imageView)
-        .load(imgData).let {
-            placeholderResId?.let { phr ->
-                it.placeholder(phr)
-            }
-            it.into(imageView)
-        }
-}
-
 /**
  * 绑定文本，支持数字绑定
  * [text] 绑定的内容
@@ -248,7 +245,6 @@ fun TextView.bindTextViewContent(text: Any, richTexts: List<VBsTextBean>? = null
         }
     }
 }
-
 
 /**
  * 将时间绑定到文本框
