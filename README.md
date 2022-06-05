@@ -1,5 +1,5 @@
 # ViewBinding
-kotlin常用扩展函数
+kotlin常用扩展函数 自用
 
 ```kotlin
 toastShort("")
