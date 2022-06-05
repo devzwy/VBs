@@ -1,7 +1,5 @@
 package com.fr71.vbs
 
-import android.view.View
-
 /**
  * 对一段文字中需要特殊标注文字颜色和大小时使用的实体类
  * [color]文本的颜色

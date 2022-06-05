@@ -1,16 +1,12 @@
 package com.example.vbsdemo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-import androidx.constraintlayout.helper.widget.MotionPlaceholder
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.vbsdemo.databinding.ActivityMainBinding
 import com.fr71.vbs.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                     color = "#FF6200EE",
                     text = "vbs",
                     tag = null,
-                    textSize = dp2px(35).toFloat()
+                    textSize = 25f.dp.toFloat()
                 ),
                 VBsTextBean(
                     color = "#FF3700B3",
@@ -81,23 +77,6 @@ class MainActivity : AppCompatActivity() {
 
     inner class Data(val text: Any, val vbsTexts: List<VBsTextBean>? = null)
     inner class ImgData(val imgData: Any, val placeholder: Int? = null)
-
-
-
-    fun aaaa(){
-        toastShort("")
-        toastLong("")
-        dp2px(100)
-        px2dp(100)
-        copyToClipboard("1234567")
-        getColorFromRes(R.color.black)
-        TestData().toJson()
-        "{...}".toObject(TestData::class.java).a
-        "[...]".toObjectArray<String>().get(0)
-        "[{},{}]".toObjectArray<TestData>().get(0)
-
-    }
-
 
 }
 

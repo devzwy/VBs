@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:vbs="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -15,6 +14,7 @@
         <variable
             name="imgData"
             type="com.example.vbsdemo.MainActivity.ImgData" />
+
         <variable
             name="imgData2"
             type="com.example.vbsdemo.MainActivity.ImgData" />
