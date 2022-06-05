@@ -12,6 +12,21 @@
             name="data2"
             type="com.example.vbsdemo.MainActivity.Data" />
 
+        <variable
+            name="imgData"
+            type="com.example.vbsdemo.MainActivity.ImgData" />
+        <variable
+            name="imgData2"
+            type="com.example.vbsdemo.MainActivity.ImgData" />
+
+        <variable
+            name="date"
+            type="java.util.Date" />
+
+        <variable
+            name="dt"
+            type="Long" />
+
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -21,7 +36,23 @@
         android:padding="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            vbs_bindRichTexts="@{data2.vbsTexts}"
+            android:layout_width="wrap_content"
+            vbs_bindTime="@{date}"
+            vbs_timeFormat="@{`yyyy-MM-dd`}"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            vbs_bindTime="@{dt}"
+            vbs_timeFormat="@{`HH:mm:ss`}"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            vbs_richTexts="@{data2.vbsTexts}"
             vbs_bindText="@{data2.text}"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -35,6 +66,36 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:textSize="15sp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                vbs_bindImageData="@{imgData.imgData}"
+                android:layout_width="200dp"
+                android:scaleType="centerCrop"
+                android:layout_height="200dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                vbs_bindImageData="@{imgData.imgData}"
+                vbs_placeholderResId="@{imgData.placeholder}"
+                android:scaleType="centerCrop"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="5dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                vbs_bindImageData="@{imgData2.imgData}"
+                vbs_placeholderResId="@{imgData2.placeholder}"
+                android:scaleType="centerCrop"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="5dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

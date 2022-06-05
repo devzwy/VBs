@@ -24,17 +24,26 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
+
+private val gson = Gson()
 
 /**
  * Return system service which type is [T]
@@ -169,11 +178,45 @@ fun Context.getColorFromRes(@ColorRes id: Int) = ContextCompat.getColor(this, id
 fun View.getColorFromRes(@ColorRes id: Int) = ContextCompat.getColor(this.context, id)
 
 /**
+ * json字符串转对象
+ */
+fun <T> String.toObject(clazz: Class<T>): T {
+    return gson.fromJson(this, clazz)
+}
+
+/**
+ * json字符串转对象
+ */
+fun <T> String.toObjectArray(): ArrayList<T> {
+    return gson.fromJson(this, object : TypeToken<ArrayList<T>>() {}.type)
+}
+
+/**
+ * 对象转json字符串
+ */
+fun Any.toJson() = gson.toJson(this)
+
+
+private fun loadImg(
+    imageView: ImageView,
+    imgData: Any,
+    placeholderResId: Int? = null
+) {
+    Glide.with(imageView)
+        .load(imgData).let {
+            placeholderResId?.let { phr ->
+                it.placeholder(phr)
+            }
+            it.into(imageView)
+        }
+}
+
+/**
  * 绑定文本，支持数字绑定
  * [text] 绑定的内容
  * [richTexts] 富文本配置 可选
  */
-@BindingAdapter(value = ["vbs_bindText", "vbs_bindRichTexts"], requireAll = false)
+@BindingAdapter(value = ["vbs_bindText", "vbs_richTexts"], requireAll = false)
 fun TextView.bindTextViewContent(text: Any, richTexts: List<VBsTextBean>? = null) {
     this.text = "$text"
     this.text.isNotEmpty().yes {
@@ -203,5 +246,48 @@ fun TextView.bindTextViewContent(text: Any, richTexts: List<VBsTextBean>? = null
             this.movementMethod = LinkMovementMethod.getInstance()
             this.highlightColor = this.getColorFromRes(android.R.color.transparent)
         }
+    }
+}
+
+
+/**
+ * 将时间绑定到文本框
+ * [td] 可以为Date/时间戳
+ * [formatStr] 格式化 可选  默认yyyy-MM-dd HH:mm:ss
+ */
+@BindingAdapter(value = ["vbs_bindTime", "vbs_timeFormat"], requireAll = false)
+fun TextView.bindTimeText(td: Any, formatStr: String? = null) {
+    when (td) {
+        is Date -> this.text =
+            SimpleDateFormat(formatStr ?: "yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(td)
+        is Int, is Long -> this.text =
+            SimpleDateFormat(
+                formatStr ?: "yyyy-MM-dd HH:mm:ss",
+                Locale.getDefault()
+            ).format(Date(td.toString().toLong()))
+    }
+}
+
+/**
+ * 绑定图片
+ * [imgData] 图片地址/路径/资源ID
+ * [default] 默认资源 默认为空
+ */
+@BindingAdapter(value = ["vbs_bindImageData", "vbs_placeholderResId"], requireAll = false)
+fun ImageView.bindImageSource(imgData: Any, default: Int? = null) {
+    loadImg(this, imgData, default)
+}
+
+/**
+ * view显示与隐藏
+ * [isVisibility] 是否显示
+ * [occupy] 隐藏时有效，隐藏时是否占位隐藏 可选，默认false
+ */
+@BindingAdapter(value = ["vbs_isVisibility", "vbs_occupy"], requireAll = false)
+fun View.bindViewIsVisibility(isVisibility: Boolean, occupy: Boolean? = false): Unit {
+    isVisibility.yes {
+        this.visibility = View.VISIBLE
+    }.otherwise {
+        this.visibility = if (occupy == true) View.INVISIBLE else View.GONE
     }
 }

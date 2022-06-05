@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.helper.widget.MotionPlaceholder
 import androidx.databinding.DataBindingUtil
 import com.example.vbsdemo.databinding.ActivityMainBinding
-import com.fr71.vbs.OnVbsTextClickListener
-import com.fr71.vbs.VBsTextBean
-import com.fr71.vbs.dp2px
-import com.fr71.vbs.toastShort
+import com.fr71.vbs.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,50 @@ class MainActivity : AppCompatActivity() {
                     }),
             )
         )
+
+        println(TestData().toJson())
+
+        val tt =
+            "{\"a\":\"你好\",\"b\":[\"你好。\",\"臭宝\"],\"c\":[{\"color\":\"#fdfdfd\",\"showUnderLine\":false,\"text\":\"啦啦啦啦啦\"}]}"
+
+        println(tt.toObject(TestData::class.java))
+        System.currentTimeMillis()
+
+        println(
+            arrayListOf(
+                VBsTextBean("#fdfdfd", "啦啦啦啦啦"),
+                VBsTextBean("#fdfdfd", "sdsdsdsds"),
+            ).toJson()
+        )
+
+        val tt2 =
+            "[{\"color\":\"#fdfdfd\",\"showUnderLine\":false,\"text\":\"啦啦啦啦啦\"},{\"color\":\"#fdfdfd\",\"showUnderLine\":false,\"text\":\"sdsdsdsds\"}]"
+
+        println(tt2.toObjectArray<VBsTextBean>())
+
+        mDataBinding.imgData = ImgData(
+            "https://download.wdsf.top/dev/image/demo.png",
+            R.drawable.ic_launcher_background
+        )
+
+        mDataBinding.imgData2 = ImgData(R.drawable.demo, R.mipmap.ic_launcher)
+
+        mDataBinding.date = Date(System.currentTimeMillis() + 10000)
+
+        mDataBinding.dt = System.currentTimeMillis()
     }
 
+
     inner class Data(val text: Any, val vbsTexts: List<VBsTextBean>? = null)
+    inner class ImgData(val imgData: Any, val placeholder: Int? = null)
+
+
 }
+
+data class TestData(
+    val a: String = "你好",
+    val b: ArrayList<String> = arrayListOf<String>("你好。", "臭宝"),
+    val c: ArrayList<VBsTextBean> = arrayListOf(
+        VBsTextBean("#fdfdfd", "啦啦啦啦啦")
+    )
+)
